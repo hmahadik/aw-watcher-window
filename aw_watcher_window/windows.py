@@ -4,6 +4,11 @@ import wmi
 import win32gui
 import win32process
 
+from PyQt5 import QtWidgets
+from datetime import datetime
+import os
+import sys
+
 c = wmi.WMI()
 
 """
@@ -35,8 +40,18 @@ def get_active_window_handle():
     hwnd = win32gui.GetForegroundWindow()
     return hwnd
 
+def get_screenshot(hwnd):
+    app = QtWidgets.QApplication.instance()
+    if app is None:
+        app = QtWidgets.QApplication(sys.argv)
+    filename = str(datetime.now()).replace(":",'-')
+    filename = filename[:filename.rfind("-")]
+    filepath = os.path.abspath("{}.png".format(filename))
+    if app.primaryScreen().grabWindow(app.desktop().winId()).save(filepath):
+        return filepath
 
 if __name__ == "__main__":
     hwnd = get_active_window_handle()
     print("Title:", get_window_title(hwnd))
     print("App:", get_app_name(hwnd))
+    print("Screenshot:", get_screenshot(hwnd))

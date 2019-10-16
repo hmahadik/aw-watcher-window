@@ -30,13 +30,16 @@ def get_current_window_windows() -> Optional[dict]:
     window_handle = windows.get_active_window_handle()
     app = windows.get_app_name(window_handle)
     title = windows.get_window_title(window_handle)
+    screenshot = windows.get_screenshot(window_handle)
 
     if app is None:
         app = "unknown"
     if title is None:
         title = "unknown"
+    if screenshot is None:
+        screenshot = "unknown"
 
-    return {"appname": app, "title": title}
+    return {"appname": app, "title": title, "screenshot": screenshot}
 
 
 def get_current_window() -> Optional[dict]:

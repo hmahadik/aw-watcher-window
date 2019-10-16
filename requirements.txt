@@ -4,3 +4,4 @@ git+https://github.com/ActivityWatch/aw-client.git@master#egg=aw-client
 wmi; sys_platform == 'win32'
 pypiwin32; sys_platform == 'win32'
 python-xlib; sys_platform == 'linux'
+PyQt5 < 5.11; sys_platform == 'win32'
