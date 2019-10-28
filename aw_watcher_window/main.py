@@ -5,6 +5,7 @@ import sys
 import os
 from time import sleep
 from datetime import datetime, timezone
+from PyQt5 import QtWidgets
 
 from aw_core.util import assert_version
 from aw_core.models import Event
@@ -16,6 +17,7 @@ from .config import load_config
 
 logger = logging.getLogger(__name__)
 
+app = QtWidgets.QApplication([])
 
 def main():
     # Verify python version is >=3.5

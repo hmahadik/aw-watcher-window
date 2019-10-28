@@ -4,7 +4,7 @@ import wmi
 import win32gui
 import win32process
 
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, QtGui
 from datetime import datetime
 import os
 import sys
@@ -46,9 +46,15 @@ def get_screenshot(hwnd):
         app = QtWidgets.QApplication(sys.argv)
     filename = str(datetime.now()).replace(":",'-')
     filename = filename[:filename.rfind("-")]
-    filepath = os.path.abspath("{}.png".format(filename))
-    if app.primaryScreen().grabWindow(app.desktop().winId()).save(filepath):
-        return filepath
+    filename = "{}.jpg".format(filename)
+    screenshot_folder = "/Users/harshad/Dropbox/Screenshots/ActivityWatch"
+    filepath = os.path.abspath(os.path.join(screenshot_folder, filename))
+    if not os.path.exists(filepath):
+        image_writer = QtGui.QImageWriter(filepath)
+        image_writer.setQuality(50)
+        pixmap = app.primaryScreen().grabWindow(0,0,-1,-1)
+        if image_writer.write(pixmap.toImage()):
+            return filepath
 
 if __name__ == "__main__":
     hwnd = get_active_window_handle()
